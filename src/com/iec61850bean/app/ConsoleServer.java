@@ -3,11 +3,13 @@ package com.iec61850bean.app;
 import com.beanit.iec61850bean.*;
 import com.beanit.iec61850bean.internal.cli.*;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConsoleServer {
+
 
     private static final String WRITE_VALUE_KEY = "w";
     private static final String WRITE_VALUE_KEY_DESCRIPTION = "write value to model node";
@@ -32,6 +34,7 @@ public class ConsoleServer {
 
     public static void main(String[] args) throws IOException {
 
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
         List<CliParameter> cliParameters = new ArrayList<>();
         cliParameters.add(modelFileParam);
         cliParameters.add(portParam);
