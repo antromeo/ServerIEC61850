@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="asn1bean-1.12.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../iec61850bean/build/libs-all/asn1bean-1.12.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../iec61850bean/build/libs-all/iec61850bean-1.9.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../iec61850bean/build/libs-all/logback-classic-1.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../iec61850bean/build/libs-all/logback-core-1.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../iec61850bean/build/libs-all/slf4j-api-1.7.25.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
