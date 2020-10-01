@@ -4,11 +4,38 @@ import com.beanit.iec61850bean.*;
 import com.beanit.iec61850bean.internal.cli.*;
 
 
-import java.io.IOException;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConsoleServer {
+
+    private static void SendFile() throws IOException {
+        ServerSocket receiver = null;
+        OutputStream out = null;
+        Socket socket = null;
+        File myFile = new File("genericIO.icd");
+        /*static int count;*/
+        byte[] buffer = new byte[(int) myFile.length()];
+
+        receiver = new ServerSocket(9099);
+        socket = receiver.accept();
+        System.out.println("Accepted connection from : " + socket);
+        FileInputStream fis = new FileInputStream(myFile);
+        BufferedInputStream in = new BufferedInputStream(fis);
+        in.read(buffer, 0, buffer.length);
+        out = socket.getOutputStream();
+        System.out.println("Sending files");
+        out.write(buffer, 0, buffer.length);
+        out.flush();
+        out.close();
+        in.close();
+        socket.close();
+        System.out.println("Finished sending");
+    }
+
 
 
     private static final String WRITE_VALUE_KEY = "w";
@@ -52,6 +79,7 @@ public class ConsoleServer {
         }
 
         List<ServerModel> serverModels = null;
+
         try {
             serverModels = SclParser.parse(modelFileParam.getValue());
         } catch (SclParseException e) {
@@ -77,7 +105,7 @@ public class ConsoleServer {
         serverModel = serverSap.getModelCopy();
 
         serverSap.startListening(new EventListener());
-
+        SendFile();
         actionProcessor.addAction(
                 new Action(PRINT_SERVER_MODEL_KEY, PRINT_SERVER_MODEL_KEY_DESCRIPTION));
         actionProcessor.addAction(new Action(WRITE_VALUE_KEY, WRITE_VALUE_KEY_DESCRIPTION));
