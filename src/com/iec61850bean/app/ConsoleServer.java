@@ -12,15 +12,14 @@ import java.util.List;
 
 public class ConsoleServer {
 
-    private static void SendFile() throws IOException {
+    private static void sendFile(String path_file, int port) throws IOException {
         ServerSocket receiver = null;
         OutputStream out = null;
         Socket socket = null;
-        File myFile = new File("genericIO.icd");
-        /*static int count;*/
+        File myFile = new File(path_file);
         byte[] buffer = new byte[(int) myFile.length()];
 
-        receiver = new ServerSocket(9099);
+        receiver = new ServerSocket(port);
         socket = receiver.accept();
         System.out.println("Accepted connection from : " + socket);
         FileInputStream fis = new FileInputStream(myFile);
@@ -60,6 +59,8 @@ public class ConsoleServer {
     private static ServerSap serverSap = null;
 
     public static void main(String[] args) throws IOException {
+        String path_file="genericIO.icd";
+        int port=9099;
 
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
         List<CliParameter> cliParameters = new ArrayList<>();
@@ -103,9 +104,8 @@ public class ConsoleServer {
                         });
 
         serverModel = serverSap.getModelCopy();
-
         serverSap.startListening(new EventListener());
-        SendFile();
+        sendFile(path_file, port);
         actionProcessor.addAction(
                 new Action(PRINT_SERVER_MODEL_KEY, PRINT_SERVER_MODEL_KEY_DESCRIPTION));
         actionProcessor.addAction(new Action(WRITE_VALUE_KEY, WRITE_VALUE_KEY_DESCRIPTION));
